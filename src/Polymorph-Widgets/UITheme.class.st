@@ -797,32 +797,22 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 
 { #category : 'services' }
 UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-    "Answer the result of a file name chooser dialog with the given title, extensions
-    path and preview type.
-    Answer nil or a filename."
+	"Answer the result of a file name chooser dialog with the given title, extensions
+	path and preview type.
+	Answer nil or a filename."
 
-    | dialog |
-	"| dialog defaultFolder |"	
-    
-    dialog := self fileSaveDialogWindowClass new.
-    exts 
-        ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
-    path 
-        ifNotNil: [ dialog nameText: path asFileReference basename ].
-        
-    "defaultFolder := path 
-        ifNil: [ StFileSystemModel defaultDirectory ]
-         ifNotNil: [ path 
-            ifFile: [ path parent ]
-             ifDirectory: [ path ] 
-            ifAbsent: [ path path parent asFileReference ] ]."
-        
-    ^ dialog
-		  defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
-        "defaultFolder: defaultFolder;"
-        title: (title ifNil: [ 'Save as' translated ] ifNotNil: [ title ]);
-        openModal;
-        selectedEntry
+	| dialog |
+	
+	dialog := self fileSaveDialogWindowClass new.
+	exts 
+		ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path 
+		ifNotNil: [ dialog nameText: path asFileReference basename ].
+	^ dialog
+		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		title: (title ifNil: [ 'Save as' translated ] ifNotNil: [ title ]);
+		openModal;
+		selectedEntry
 ]
 
 { #category : 'services' }
